@@ -1,7 +1,7 @@
 package be.petsitgroup.petsitting.service;
 
-import be.petsitgroup.petsitting.dto.CreateReviewRequest;
-import be.petsitgroup.petsitting.dto.ReviewResponse;
+import be.petsitgroup.petsitting.dto.review.CreateReviewRequest;
+import be.petsitgroup.petsitting.dto.review.ReviewResponse;
 
 import java.util.List;
 

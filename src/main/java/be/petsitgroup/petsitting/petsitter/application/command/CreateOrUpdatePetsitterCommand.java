@@ -1,43 +1,26 @@
-package be.petsitgroup.petsitting.dto;
+package be.petsitgroup.petsitting.petsitter.application.command;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class CreateOrUpdatePetsitterRequest {
+public class CreateOrUpdatePetsitterCommand {
 
-    private String name;
-    private String phoneNumber;
-    private String email;
     private BigDecimal hourlyRate;
     private Integer yearsExperience;
     private String bio;
     private LocalDate availableDate;
 
-    public CreateOrUpdatePetsitterRequest() {
+    public CreateOrUpdatePetsitterCommand() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public CreateOrUpdatePetsitterCommand(BigDecimal hourlyRate,
+            Integer yearsExperience,
+            String bio,
+            LocalDate availableDate) {
+        this.hourlyRate = hourlyRate;
+        this.yearsExperience = yearsExperience;
+        this.bio = bio;
+        this.availableDate = availableDate;
     }
 
     public BigDecimal getHourlyRate() {

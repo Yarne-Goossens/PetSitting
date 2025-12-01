@@ -1,8 +1,8 @@
 package be.petsitgroup.petsitting.controller;
 
-import be.petsitgroup.petsitting.dto.AuthResponse;
-import be.petsitgroup.petsitting.dto.LoginRequest;
-import be.petsitgroup.petsitting.dto.RegisterRequest;
+import be.petsitgroup.petsitting.dto.auth.AuthResponse;
+import be.petsitgroup.petsitting.dto.auth.LoginRequest;
+import be.petsitgroup.petsitting.dto.auth.RegisterRequest;
 import be.petsitgroup.petsitting.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

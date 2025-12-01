@@ -1,8 +1,8 @@
 package be.petsitgroup.petsitting.controller;
 
-import be.petsitgroup.petsitting.dto.CreatePlaydateRequest;
-import be.petsitgroup.petsitting.dto.PlaydateResponse;
-import be.petsitgroup.petsitting.dto.UpdatePlaydateStatusRequest;
+import be.petsitgroup.petsitting.dto.playdate.CreatePlaydateRequest;
+import be.petsitgroup.petsitting.dto.playdate.PlaydateResponse;
+import be.petsitgroup.petsitting.dto.playdate.UpdatePlaydateStatusRequest;
 import be.petsitgroup.petsitting.service.PlaydateService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/playdates")
+@RequestMapping("/playdates")
 @SecurityRequirement(name = "bearerAuth")
 public class PlaydateController {
 

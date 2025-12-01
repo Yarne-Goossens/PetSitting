@@ -14,12 +14,12 @@ public class Petsitter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // private String name;
+    private String name;
 
-    // @Column(name = "phone_number")
-    // private String phoneNumber;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    // private String email;
+    private String email;
 
     @OneToOne
     @JoinColumn(name = "owner_id", unique = true)
@@ -79,29 +79,29 @@ public class Petsitter {
         this.id = id;
     }
 
-    // public String getName() {
-    // return name;
-    // }
+    public String getName() {
+        return name;
+    }
 
-    // public void setName(String name) {
-    // this.name = name;
-    // }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    // public String getPhoneNumber() {
-    // return phoneNumber;
-    // }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-    // public void setPhoneNumber(String phoneNumber) {
-    // this.phoneNumber = phoneNumber;
-    // }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-    // public String getEmail() {
-    // return email;
-    // }
+    public String getEmail() {
+        return email;
+    }
 
-    // public void setEmail(String email) {
-    // this.email = email;
-    // }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public BigDecimal getHourlyRate() {
         return hourlyRate;

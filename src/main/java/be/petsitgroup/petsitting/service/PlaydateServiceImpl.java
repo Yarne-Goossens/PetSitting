@@ -1,8 +1,8 @@
 package be.petsitgroup.petsitting.service;
 
-import be.petsitgroup.petsitting.dto.CreatePlaydateRequest;
-import be.petsitgroup.petsitting.dto.PlaydateResponse;
-import be.petsitgroup.petsitting.dto.UpdatePlaydateStatusRequest;
+import be.petsitgroup.petsitting.dto.playdate.CreatePlaydateRequest;
+import be.petsitgroup.petsitting.dto.playdate.PlaydateResponse;
+import be.petsitgroup.petsitting.dto.playdate.UpdatePlaydateStatusRequest;
 import be.petsitgroup.petsitting.model.Owner;
 import be.petsitgroup.petsitting.model.Pets;
 import be.petsitgroup.petsitting.model.Petsitter;

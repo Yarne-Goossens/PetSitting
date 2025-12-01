@@ -1,43 +1,19 @@
-package be.petsitgroup.petsitting.dto;
+package be.petsitgroup.petsitting.dto.petsitter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class PetsitterResponse {
+public class CreateOrUpdatePetsitterRequest {
 
-    private Long id;
     private String name;
     private String phoneNumber;
     private String email;
     private BigDecimal hourlyRate;
     private Integer yearsExperience;
-    private Double rating;
     private String bio;
     private LocalDate availableDate;
 
-    public PetsitterResponse() {
-    }
-
-    public PetsitterResponse(Long id, String name, String phoneNumber, String email,
-            BigDecimal hourlyRate, Integer yearsExperience,
-            Double rating, String bio, LocalDate availableDate) {
-        this.id = id;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.hourlyRate = hourlyRate;
-        this.yearsExperience = yearsExperience;
-        this.rating = rating;
-        this.bio = bio;
-        this.availableDate = availableDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public CreateOrUpdatePetsitterRequest() {
     }
 
     public String getName() {
@@ -78,14 +54,6 @@ public class PetsitterResponse {
 
     public void setYearsExperience(Integer yearsExperience) {
         this.yearsExperience = yearsExperience;
-    }
-
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
     }
 
     public String getBio() {
