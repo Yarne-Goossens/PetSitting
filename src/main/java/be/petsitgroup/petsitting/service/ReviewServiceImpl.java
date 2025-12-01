@@ -10,7 +10,6 @@ import be.petsitgroup.petsitting.repository.PetsitterRepository;
 import be.petsitgroup.petsitting.repository.PlaydateRepository;
 import be.petsitgroup.petsitting.repository.ReviewRepository;
 import be.petsitgroup.petsitting.security.CustomUserDetails;
-import be.petsitgroup.petsitting.service.ReviewService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
