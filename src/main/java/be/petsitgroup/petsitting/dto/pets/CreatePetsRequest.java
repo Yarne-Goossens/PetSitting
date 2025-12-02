@@ -1,4 +1,4 @@
-package be.petsitgroup.petsitting.dto;
+package be.petsitgroup.petsitting.dto.pets;
 
 public class CreatePetsRequest {
 

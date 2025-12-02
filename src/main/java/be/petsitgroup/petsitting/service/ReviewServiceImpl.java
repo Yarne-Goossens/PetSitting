@@ -1,7 +1,7 @@
 package be.petsitgroup.petsitting.service;
 
-import be.petsitgroup.petsitting.dto.CreateReviewRequest;
-import be.petsitgroup.petsitting.dto.ReviewResponse;
+import be.petsitgroup.petsitting.dto.review.CreateReviewRequest;
+import be.petsitgroup.petsitting.dto.review.ReviewResponse;
 import be.petsitgroup.petsitting.model.Owner;
 import be.petsitgroup.petsitting.model.Petsitter;
 import be.petsitgroup.petsitting.model.Playdate;
@@ -10,7 +10,6 @@ import be.petsitgroup.petsitting.repository.PetsitterRepository;
 import be.petsitgroup.petsitting.repository.PlaydateRepository;
 import be.petsitgroup.petsitting.repository.ReviewRepository;
 import be.petsitgroup.petsitting.security.CustomUserDetails;
-import be.petsitgroup.petsitting.service.ReviewService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

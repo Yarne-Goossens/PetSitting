@@ -1,7 +1,7 @@
 package be.petsitgroup.petsitting.controller;
 
-import be.petsitgroup.petsitting.dto.CreateReviewRequest;
-import be.petsitgroup.petsitting.dto.ReviewResponse;
+import be.petsitgroup.petsitting.dto.review.CreateReviewRequest;
+import be.petsitgroup.petsitting.dto.review.ReviewResponse;
 import be.petsitgroup.petsitting.service.ReviewService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/reviews")
 @SecurityRequirement(name = "bearerAuth")
 public class ReviewController {
 

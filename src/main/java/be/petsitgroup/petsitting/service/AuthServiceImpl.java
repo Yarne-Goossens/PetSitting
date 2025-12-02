@@ -1,10 +1,11 @@
 package be.petsitgroup.petsitting.service;
 
-import be.petsitgroup.petsitting.dto.AuthResponse;
-import be.petsitgroup.petsitting.dto.LoginRequest;
-import be.petsitgroup.petsitting.dto.RegisterRequest;
+import be.petsitgroup.petsitting.dto.auth.AuthResponse;
+import be.petsitgroup.petsitting.dto.auth.LoginRequest;
+import be.petsitgroup.petsitting.dto.auth.RegisterRequest;
 import be.petsitgroup.petsitting.model.Owner;
-import be.petsitgroup.petsitting.model.Role;
+import be.petsitgroup.petsitting.owner.application.command.OwnerCommandService;
+import be.petsitgroup.petsitting.owner.application.command.RegisterOwnerCommand;
 import be.petsitgroup.petsitting.repository.OwnerRepository;
 import be.petsitgroup.petsitting.security.JwtTokenProvider;
 
@@ -17,33 +18,38 @@ public class AuthServiceImpl implements AuthService {
     private final OwnerRepository ownerRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final OwnerCommandService ownerCommandService;
 
     public AuthServiceImpl(OwnerRepository ownerRepository,
             PasswordEncoder passwordEncoder,
-            JwtTokenProvider jwtTokenProvider) {
+            JwtTokenProvider jwtTokenProvider,
+            OwnerCommandService ownerCommandService) {
         this.ownerRepository = ownerRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.ownerCommandService = ownerCommandService;
     }
 
     @Override
     public AuthResponse register(RegisterRequest request) {
-        if (ownerRepository.existsByEmail(request.getEmail())) {
-            // basic error for now; later we add custom exception + handler
-            throw new RuntimeException("Email already in use");
-        }
 
-        Owner owner = new Owner();
-        owner.setName(request.getName());
-        owner.setPhoneNumber(request.getPhoneNumber());
-        owner.setEmail(request.getEmail());
-        owner.setPassword(passwordEncoder.encode(request.getPassword()));
-        owner.setAddress(request.getAddress());
-        owner.setRole(Role.OWNER);
+        // build command from incoming DTO
+        RegisterOwnerCommand command = new RegisterOwnerCommand(
+                request.getName(),
+                request.getEmail(),
+                request.getPassword(),
+                request.getAddress(),
+                request.getPhoneNumber());
 
-        Owner saved = ownerRepository.save(owner);
+        // delegate to OwnerCommandService (CQRS - command side)
+        Long ownerId = ownerCommandService.registerOwner(command);
 
-        String token = jwtTokenProvider.generateToken(saved);
+        // load owner again to build JWT (or let registerOwner return Owner directly)
+        Owner owner = ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new RuntimeException("Owner not found after registration"));
+
+        String token = jwtTokenProvider.generateToken(owner);
+
         return new AuthResponse(token);
     }
 

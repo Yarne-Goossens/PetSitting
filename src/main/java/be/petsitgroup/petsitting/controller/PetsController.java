@@ -1,7 +1,7 @@
 package be.petsitgroup.petsitting.controller;
 
-import be.petsitgroup.petsitting.dto.CreatePetsRequest;
-import be.petsitgroup.petsitting.dto.PetsResponse;
+import be.petsitgroup.petsitting.dto.pets.CreatePetsRequest;
+import be.petsitgroup.petsitting.dto.pets.PetsResponse;
 import be.petsitgroup.petsitting.service.PetsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
