@@ -1,6 +1,8 @@
 package be.petsitgroup.petsitting.repository;
 
 import be.petsitgroup.petsitting.model.Playdate;
+import be.petsitgroup.petsitting.model.Review;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
