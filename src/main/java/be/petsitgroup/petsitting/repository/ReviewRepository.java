@@ -18,4 +18,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     // all reviews written by an owner (via playdate.pet.owner.id)
     List<Review> findByPlaydatePetOwnerId(Long ownerId);
+
+    // all reviews for a petsitter via playdate.petsitter.id
+    List<Review> findByPlaydate_Petsitter_Id(Long petsitterId);
 }
