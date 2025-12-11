@@ -11,6 +11,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class PetsitterRatingUpdater {
@@ -29,22 +31,36 @@ public class PetsitterRatingUpdater {
     @EventListener
     public void onReviewCreated(ReviewCreatedEvent event) {
 
-        Long petsitterId = event.getPetsitterId();
+        log.info("Handling ReviewCreatedEvent for petsitterId={} reviewId={}",
+                event.getPetsitterId(), event.getReviewId());
 
-        // load all reviews for this petsitter
-        List<Review> reviews = reviewRepository.findByPlaydate_Petsitter_Id(petsitterId);
+        // 1. Get all reviews for this petsitter
+        var reviews = reviewRepository.findByPlaydate_Petsitter_Id(event.getPetsitterId());
 
-        double avgRating = reviews.stream()
+        if (reviews.isEmpty()) {
+            log.warn("No reviews found for petsitterId={} while handling ReviewCreatedEvent",
+                    event.getPetsitterId());
+            return;
+        }
+
+        double average = reviews.stream()
                 .mapToInt(Review::getRating)
                 .average()
                 .orElse(0.0);
 
-        Petsitter petsitter = petsitterRepository.findById(petsitterId)
-                .orElseThrow(() -> new RuntimeException("Petsitter not found"));
+        // 2. Load petsitter
+        Petsitter petsitter = petsitterRepository.findById(event.getPetsitterId())
+                .orElseThrow(() -> {
+                    log.error("Petsitter with id={} not found while updating rating",
+                            event.getPetsitterId());
+                    return new RuntimeException("Petsitter not found");
+                });
 
-        petsitter.setRating(avgRating);
+        double oldRating = petsitter.getRating() != null ? petsitter.getRating() : 0.0;
+        petsitter.setRating(average);
         petsitterRepository.save(petsitter);
 
-        log.info("Updated petsitter {} rating to {}", petsitterId, avgRating);
+        log.info("Updated petsitterId={} rating from {} to {} based on {} reviews",
+                petsitter.getId(), oldRating, average, reviews.size());
     }
 }
