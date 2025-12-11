@@ -11,9 +11,13 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class ReviewCommandServiceImpl implements ReviewCommandService {
+
+    private static final Logger log = LoggerFactory.getLogger(ReviewCommandServiceImpl.class);
 
     private final ReviewRepository reviewRepository;
     private final PlaydateRepository playdateRepository;
@@ -30,34 +34,43 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
     @Override
     public ReviewResponse createReview(CreateReviewCommand command) {
 
+        log.info("Creating review for playdateId={} with rating={}",
+                command.getPlaydateId(), command.getRating());
+
         Playdate playdate = playdateRepository.findById(command.getPlaydateId())
-                .orElseThrow(() -> new RuntimeException("Playdate not found"));
+                .orElseThrow(() -> {
+                    log.warn("Cannot create review: playdate {} not found", command.getPlaydateId());
+                    return new RuntimeException("Playdate not found");
+                });
 
         Review review = new Review();
+        review.setPlaydate(playdate);
         review.setRating(command.getRating());
         review.setComment(command.getComment());
         review.setDate(LocalDateTime.now());
-        review.setPlaydate(playdate);
 
         Review saved = reviewRepository.save(review);
 
-        Long petsitterId = playdate.getPetsitter().getId();
+        log.info("Review created with id={} for playdateId={}",
+                saved.getId(), playdate.getId());
 
-        // publish domain event
         ReviewCreatedEvent event = new ReviewCreatedEvent(
                 saved.getId(),
                 playdate.getId(),
-                petsitterId,
+                playdate.getPetsitter().getId(),
                 saved.getRating(),
                 saved.getDate());
         eventPublisher.publishEvent(event);
 
-        // map to existing DTO
+        log.debug("Published ReviewCreatedEvent for reviewId={} petsitterId={}",
+                saved.getId(), playdate.getPetsitter().getId());
+
         ReviewResponse response = new ReviewResponse();
         response.setId(saved.getId());
         response.setRating(saved.getRating());
         response.setComment(saved.getComment());
         response.setDate(saved.getDate());
+
         return response;
     }
 }

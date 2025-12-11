@@ -10,9 +10,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class OwnerCommandServiceImpl implements OwnerCommandService {
+
+    private static final Logger log = LoggerFactory.getLogger(OwnerCommandServiceImpl.class);
 
     private final OwnerRepository ownerRepository;
     private final PasswordEncoder passwordEncoder;
@@ -29,8 +33,11 @@ public class OwnerCommandServiceImpl implements OwnerCommandService {
     @Override
     public Long registerOwner(RegisterOwnerCommand command) {
 
+        log.info("Registering new owner with email={}", command.getEmail());
+
         // email unique check
         if (ownerRepository.existsByEmail(command.getEmail())) {
+            log.warn("Registration failed: email {} already in use", command.getEmail());
             throw new RuntimeException("Email already in use");
         }
 
@@ -44,7 +51,8 @@ public class OwnerCommandServiceImpl implements OwnerCommandService {
 
         Owner saved = ownerRepository.save(owner);
 
-        // publish domain event
+        log.info("Successfully registered owner id={} email={}", saved.getId(), saved.getEmail());
+
         OwnerRegisteredEvent event = new OwnerRegisteredEvent(
                 saved.getId(),
                 saved.getEmail(),
@@ -52,13 +60,20 @@ public class OwnerCommandServiceImpl implements OwnerCommandService {
                 LocalDateTime.now());
         eventPublisher.publishEvent(event);
 
+        log.debug("Published OwnerRegisteredEvent for ownerId={}", saved.getId());
+
         return saved.getId();
     }
 
     @Override
     public void updateProfile(UpdateOwnerProfileCommand command) {
+        log.info("Updating profile for ownerId={}", command.getOwnerId());
+
         Owner owner = ownerRepository.findById(command.getOwnerId())
-                .orElseThrow(() -> new RuntimeException("Owner not found"));
+                .orElseThrow(() -> {
+                    log.error("Owner with id={} not found while updating profile", command.getOwnerId());
+                    return new RuntimeException("Owner not found");
+                });
 
         owner.setName(command.getName());
         owner.setAddress(command.getAddress());
@@ -66,6 +81,6 @@ public class OwnerCommandServiceImpl implements OwnerCommandService {
 
         ownerRepository.save(owner);
 
-        // here you could publish OwnerProfileUpdatedEvent if you want
+        log.info("Updated profile for ownerId={}", owner.getId());
     }
 }
