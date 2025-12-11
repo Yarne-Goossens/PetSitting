@@ -57,7 +57,7 @@ Build PetSitting from the source and install dependencies:
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/Yarne-Goossens/PetSitting](https://github.com/Yarne-Goossens/PetSitting)
+    git clone https://github.com/Yarne-Goossens/PetSitting
     ```
 2.  Navigate to the project directory:
     ```bash
