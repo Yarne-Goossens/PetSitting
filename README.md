@@ -80,7 +80,8 @@ mvn spring-boot:run
 
 Once the application is running, you can explore and call the API via Swagger UI:
 
-[mvn spring-boot:run](http://localhost:8080/swagger-ui/index.html)
+[localhost:backend](http://localhost:8080/swagger-ui/index.html)
+"http://localhost:8080/swagger-ui/index.html"
 
 ## Testing
 
