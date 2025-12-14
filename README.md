@@ -75,7 +75,7 @@ Build PetSitting from the source and install dependencies:
 Using maven:
 
 ```bash
-mvn exec:java
+mvn spring-boot:run
 ```
 
 ## Testing
