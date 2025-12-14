@@ -78,6 +78,10 @@ Using maven:
 mvn spring-boot:run
 ```
 
+Once the application is running, you can explore and call the API via Swagger UI:
+
+http://localhost:8080/swagger-ui/index.html
+
 ## Testing
 
 Petsitting uses the **Mockito framework**. run the test suite with:
